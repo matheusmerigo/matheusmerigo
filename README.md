@@ -23,7 +23,7 @@
 
 <p align="center">
   <img
-    src="https://github-readme-activity-graph.vercel.app/graph?username=matheusmerigo&bg_color=0d1117&color=004E89&line=00f2ff&point=ffffff&area=true&hide_border=true"
+    src="./dist/activity-graph.svg"
     width="100%"
     alt="GitHub contribution graph"
   />
