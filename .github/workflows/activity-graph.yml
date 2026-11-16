@@ -20,12 +20,12 @@ jobs:
           git clone --depth 1 https://github.com/Ashutosh00710/github-readme-activity-graph.git /tmp/graph
           cd /tmp/graph
           npm install --silent
-          PORT=3000 TOKEN=$GITHUB_TOKEN npm start &
+          npm run build --if-present
+          PORT=3000 TOKEN=$GITHUB_TOKEN GITHUB_TOKEN=$GITHUB_TOKEN npm start &
           SERVER_PID=$!
-          sleep 5
           mkdir -p "$GITHUB_WORKSPACE/dist"
-          curl -s "http://localhost:3000/graph?username=matheusmerigo&bg_color=0d1117&color=004E89&line=00f2ff&point=ffffff&area=true&hide_border=true" -o "$GITHUB_WORKSPACE/dist/activity-graph.svg"
-          kill $SERVER_PID
+          curl --retry 15 --retry-delay 2 --retry-connrefused -f -s "http://localhost:3000/graph?username=matheusmerigo&bg_color=0d1117&color=004E89&line=00f2ff&point=ffffff&area=true&hide_border=true" -o "$GITHUB_WORKSPACE/dist/activity-graph.svg"
+          kill $SERVER_PID || true
 
       - name: Commit Graph
         run: |
