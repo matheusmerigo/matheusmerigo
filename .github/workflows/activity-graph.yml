@@ -12,19 +12,21 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - uses: Ashutosh00710/github-readme-activity-graph@main
+
+      - name: Generate Activity Graph SVG
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          USERNAME: matheusmerigo
-          BG_COLOR: "0d1117"
-          COLOR: "004E89"
-          LINE: "00f2ff"
-          POINT: "ffffff"
-          AREA: true
-          HIDE_BORDER: true
-          OUTPUT_DIR: "dist"
-          FILE_NAME: "activity-graph.svg"
+        run: |
+          git clone --depth 1 https://github.com/Ashutosh00710/github-readme-activity-graph.git /tmp/graph
+          cd /tmp/graph
+          npm install --silent
+          PORT=3000 TOKEN=$GITHUB_TOKEN npm start &
+          SERVER_PID=$!
+          sleep 5
+          mkdir -p "$GITHUB_WORKSPACE/dist"
+          curl -s "http://localhost:3000/graph?username=matheusmerigo&bg_color=0d1117&color=004E89&line=00f2ff&point=ffffff&area=true&hide_border=true" -o "$GITHUB_WORKSPACE/dist/activity-graph.svg"
+          kill $SERVER_PID
+
       - name: Commit Graph
         run: |
           git config --local user.email "action@github.com"
