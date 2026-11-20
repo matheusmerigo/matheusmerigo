@@ -23,6 +23,13 @@
 
 <p align="center">
   <img
+    src="https://github-readme-streak-stats.herokuapp.com/?user=matheusmerigo&theme=dark&background=0d1117&border=161b22&stroke=161b22&ring=58a6ff&fire=58a6ff&currStreakNum=58a6ff"
+    alt="GitHub Streak"
+  />
+</p>
+
+<p align="center">
+  <img
     src="./dist/activity-graph.svg"
     width="100%"
     alt="GitHub contribution graph"
